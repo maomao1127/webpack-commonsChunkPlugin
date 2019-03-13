@@ -1,0 +1,15 @@
+var path = require('path')
+
+//最原始的打包，打包结果中包含了所有的依赖
+module.exports = {
+  entry: {
+    "main1": "./src/main1.js",
+    "main2": "./src/main2.js"
+  },
+  output: {
+    path: path.resolve('./dist'),
+    // filename: "./build.js"
+    filename: "[name].js"
+  },
+  watch: true//监视文件改动，自动生成build.js
+}

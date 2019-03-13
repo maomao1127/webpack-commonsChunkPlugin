@@ -1,0 +1,25 @@
+const path = require('path')
+const packagejson = require('./package')
+const webpack = require('webpack')
+
+//所有公共的文件都被抽离到vendor.js中
+module.exports = {
+  entry: {
+    "main1": "./src/main1.js",
+    "main2": "./src/main2.js",
+    "vendor": Object.keys(packagejson.dependencies)//获取依赖的第三方库
+  },
+  output: {
+    path: path.resolve('./dist'),
+    // filename: "./build.js"
+    filename: "[name].js"
+  },
+  watch: true,//监视文件改动，自动生成build.js
+  plugins: [
+    //  所有公共的文件都被抽离到vendor.js中，包括common.js
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['vendor'],
+      filename: '[name].js'
+    })
+  ]
+}

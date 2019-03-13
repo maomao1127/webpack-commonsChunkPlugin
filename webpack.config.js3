@@ -1,0 +1,24 @@
+const path = require('path')
+const packagejson = require('./package')
+const webpack = require('webpack')
+
+//webpack运行文件抽离,runtime
+module.exports = {
+  entry: {
+    "main1": "./src/main1.js",
+    "main2": "./src/main2.js",
+    "vendor": Object.keys(packagejson.dependencies)//获取依赖的第三方库
+  },
+  output: {
+    path: path.resolve('./dist'),
+    // filename: "./build.js"
+    filename: "[name].js"
+  },
+  watch: true,//监视文件改动，自动生成build.js
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['vendor', 'runtime'],
+      filename: '[name].js'
+    })
+  ]
+}
